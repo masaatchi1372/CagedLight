@@ -300,6 +300,8 @@ public class Line : MonoBehaviour, IObjectPooled
         // edgeCollider2D.enabled = false;
         // shouldDestroy = true;
 
+        Debug.Log($"object:{other.gameObject.tag}");
+
         switch (other.gameObject.tag)
         {
             case "Obstacle":

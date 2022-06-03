@@ -18,9 +18,6 @@ public class DrawLine : MonoBehaviour
         deletionQueue = new Queue<GameObject>();
         objectPooler = ObjectPooler.Instance;
         mainCam = Camera.main;
-
-        // just for JIT prevention
-        var JITprevention = Input.touchCount;
     }
 
     void Update()
