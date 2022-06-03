@@ -20,7 +20,7 @@ public class Line : MonoBehaviour, IObjectPooled
     public float lineRemovalSpeed = 0.01f;
     [Tooltip("How fast should the line header rotate towards the direction of the line")]
     public float lineHeadRotationSpeed = 1f;
-    [Tooltip("If line head rotation is below this threshold, it won't change direction. if You choose low numbers, line header become more noisy")]
+    [Tooltip("If line head rotatino is below this threshold, it won't change direction. if You choose low numbers, line header become more noisy")]
 
     [HideInInspector] public List<Vector3> inputPositions { get; set; }// points of the drawing line
     [HideInInspector] public List<float> timeIntervals { get; set; } // time interval between each point    
@@ -307,7 +307,7 @@ public class Line : MonoBehaviour, IObjectPooled
                 break;
             case "Enemy":
                 // we perform an attack if there's any attacking component on our line
-                Debug.Log("Attack");
+                // TO DO: Attack
                 break;
 
             default:
