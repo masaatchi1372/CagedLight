@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DrawLine : MonoBehaviour
-{    
+{
     private GameObject currentLine;
     private List<GameObject> lineGameObjectsList;
     private Queue<GameObject> deletionQueue;
@@ -28,7 +28,7 @@ public class DrawLine : MonoBehaviour
         {
             currentLineComponent = currentLine.GetComponent<Line>();
         }
-        
+
         // on right mouse button all lines would be destroyed
         if (Input.GetMouseButtonDown(1))
         {
@@ -44,7 +44,7 @@ public class DrawLine : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && currentLine == null && (Settings.tryCount < Settings.triesAllowed))
         {
             // Initiating the line
-            SpawnLine();                        
+            SpawnLine();
         }
 
         // on Drag
@@ -108,7 +108,6 @@ public class DrawLine : MonoBehaviour
                     // if there's still one point on the line which user can see (it's in the screen) we should continue the line flow
                     if (lineComponent.inputPositions.Count < 2 || !lineComponent.HasAtLeaseOnePointInScreen())
                     {
-                        objectPooler.PoolObject("Line", line);
                         deletionQueue.Enqueue(line);
                         continue;
                     }
@@ -128,8 +127,8 @@ public class DrawLine : MonoBehaviour
                     }
                 }
             }
-        } 
-        
+        }
+
         // we have no active line
         if (currentLine == null && lineGameObjectsList.Count == 0)
         {
@@ -143,14 +142,20 @@ public class DrawLine : MonoBehaviour
     private void SpawnLine()
     {
         // initiating current line with our prefab with no vertex on its lineRenderer
-        currentLine = objectPooler.SpawnFromPool("Line", Vector3.zero, Quaternion.identity);        
+        currentLine = objectPooler.SpawnFromPool("Line", Vector3.zero, Quaternion.identity);
     }
 
+    // removing all lines in the LineGameObjectsList
     private void ClearDeletionQueue()
     {
         for (int i = 0; i < deletionQueue.Count; i++)
         {
-            lineGameObjectsList.Remove(deletionQueue.Dequeue());
+            // pool back the object for future use
+            GameObject line = deletionQueue.Dequeue();
+            objectPooler.PoolObject("Line", line);
+
+            // remove it frmo the list
+            lineGameObjectsList.Remove(line);
         }
     }
 
@@ -162,6 +167,7 @@ public class DrawLine : MonoBehaviour
             if (line != null)
             {
                 objectPooler.PoolObject("Line", line);
+                deletionQueue.Enqueue(line);
             }
         }
     }

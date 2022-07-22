@@ -54,7 +54,18 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
         }
 
         // we get an object from the pool
-        GameObject objectToSpawn = poolDictionary[tag].Dequeue();
+        if (poolDictionary[tag].Count < 1)
+        {
+            Debug.Log($"count:{poolDictionary[tag].Count} Queue is empty, cannot spawn an object");
+            return null;
+        }
+
+        GameObject objectToSpawn;
+        if (!poolDictionary[tag].TryDequeue(out objectToSpawn) )
+        {
+            Debug.Log($"couldn't dequeue object from the pool");
+            return null;
+        }
 
         // setting the transforms
         objectToSpawn.transform.position = position;
@@ -70,8 +81,8 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
             objPoolInterface.OnSpawnObjectPooled();
         }
 
-        // we put it back to the queue
-        poolDictionary[tag].Enqueue(objectToSpawn);
+        // // we put it back to the queue
+        // poolDictionary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
     }
@@ -100,6 +111,7 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
 
         // put back in the poolDictionary
         poolDictionary[tag].Enqueue(objToPool);
+        Debug.Log($"here {poolDictionary[tag].Count}");
 
         return true;
     }

@@ -93,8 +93,11 @@ public class Line : MonoBehaviour, IObjectPooled
     public bool OnPoolingObject()
     {
         inputPositions.Clear();
+        
         timeIntervals.Clear();
-        lineRenderer.positionCount = 0;
+        
+        lineRenderer.positionCount = 1;
+        lineRenderer.SetPosition(0, Vector3.zero);
 
         return false;
     }
