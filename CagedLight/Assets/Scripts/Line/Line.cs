@@ -99,6 +99,8 @@ public class Line : MonoBehaviour, IObjectPooled
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, Vector3.zero);
 
+        shouldDestroy = false;
+
         return false;
     }
 
@@ -303,12 +305,13 @@ public class Line : MonoBehaviour, IObjectPooled
         // edgeCollider2D.enabled = false;
         // shouldDestroy = true;
 
-        Debug.Log($"object:{other.gameObject.tag}");
+        // Debug.Log($"object: {other.gameObject.tag}");
 
         switch (other.gameObject.tag)
         {
             case "Obstacle":
-                Settings.shouldLose = true;
+                // Settings.shouldLose = true;
+                shouldDestroy = true;
                 break;
             case "Enemy":
                 // we perform an attack if there's any attacking component on our line

@@ -49,21 +49,21 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
     {
         if (!poolDictionary.ContainsKey(tag))
         {
-            Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
+            // Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
             return null;
         }
 
         // we get an object from the pool
         if (poolDictionary[tag].Count < 1)
         {
-            Debug.Log($"count:{poolDictionary[tag].Count} Queue is empty, cannot spawn an object");
+            // Debug.Log($"count:{poolDictionary[tag].Count} Queue is empty, cannot spawn an object");
             return null;
         }
 
         GameObject objectToSpawn;
         if (!poolDictionary[tag].TryDequeue(out objectToSpawn) )
         {
-            Debug.Log($"couldn't dequeue object from the pool");
+            // Debug.Log($"couldn't dequeue object from the pool");
             return null;
         }
 
@@ -91,7 +91,7 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
     {
         if (!poolDictionary.ContainsKey(tag))
         {
-            Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
+            // Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
             return false;
         }
 
@@ -111,7 +111,7 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
 
         // put back in the poolDictionary
         poolDictionary[tag].Enqueue(objToPool);
-        Debug.Log($"here {poolDictionary[tag].Count}");
+        // Debug.Log($"here {poolDictionary[tag].Count}");
 
         return true;
     }

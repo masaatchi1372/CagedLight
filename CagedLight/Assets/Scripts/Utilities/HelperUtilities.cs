@@ -13,6 +13,15 @@ public static class HelperUtilities
         return false;
     }
 
+    public static bool ValidateCheckNonZeroIng(Object thisObject, string fieldName, int intToCheck){
+        if (intToCheck < 1)
+        {
+            Debug.Log(fieldName + " should be a non zero variable and must contain a value in object " + thisObject.name.ToString());
+            return true;
+        }
+        return false;
+    }
+
     public static bool ValidateCheckEnumerableValues(Object thisObject, string fieldName, IEnumerable enumerableObjectToCheck) {
         bool error = false;
         int count = 0;
