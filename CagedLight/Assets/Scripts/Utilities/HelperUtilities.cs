@@ -4,7 +4,8 @@ using UnityEngine;
 
 public static class HelperUtilities
 {
-    public static bool ValidateCheckEmptyString(Object thisObject, string fieldName, string stringToCheck){
+    public static bool ValidateCheckEmptyString(Object thisObject, string fieldName, string stringToCheck)
+    {
         if (stringToCheck == "")
         {
             Debug.Log(fieldName + " is empty and must contain a value in object " + thisObject.name.ToString());
@@ -13,7 +14,8 @@ public static class HelperUtilities
         return false;
     }
 
-    public static bool ValidateCheckNonZeroIng(Object thisObject, string fieldName, int intToCheck){
+    public static bool ValidateCheckNonZeroInt(Object thisObject, string fieldName, int intToCheck)
+    {
         if (intToCheck < 1)
         {
             Debug.Log(fieldName + " should be a non zero variable and must contain a value in object " + thisObject.name.ToString());
@@ -22,7 +24,8 @@ public static class HelperUtilities
         return false;
     }
 
-    public static bool ValidateCheckEnumerableValues(Object thisObject, string fieldName, IEnumerable enumerableObjectToCheck) {
+    public static bool ValidateCheckEnumerableValues(Object thisObject, string fieldName, IEnumerable enumerableObjectToCheck)
+    {
         bool error = false;
         int count = 0;
 
@@ -41,7 +44,7 @@ public static class HelperUtilities
             }
             else
             {
-                count ++;
+                count++;
             }
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DarkJungleLevel_", menuName = "Scriptable Objects/Dark Jungle Level", order = 0)]
-public class DarkJungleLevelsSO : ScriptableObject
+public class LevelSO : ScriptableObject
 {
     [Header("General Info")]
     [Space(5)]
@@ -13,12 +13,17 @@ public class DarkJungleLevelsSO : ScriptableObject
     public GameObject levelPrefab;
     public GameObject environment;
 
+    public void Info()
+    {
+        Debug.Log($"Level General Info: no:{levelNo}, try count:{tryCount}, enemies:{enemyCount}");
+    }
+
     #region editor code
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (HelperUtilities.ValidateCheckNonZeroIng(this, nameof(levelNo), levelNo)) return;
-        if (HelperUtilities.ValidateCheckNonZeroIng(this, nameof(enemyCount), enemyCount)) return;
+        if (HelperUtilities.ValidateCheckNonZeroInt(this, nameof(levelNo), levelNo)) return;
+        if (HelperUtilities.ValidateCheckNonZeroInt(this, nameof(enemyCount), enemyCount)) return;
         if (levelPrefab == null) Debug.Log($"{this.name.ToString()} : levelPrefab is null");
         if (environment == null) Debug.Log($"{this.name.ToString()} : environment is null");
     }

@@ -56,6 +56,9 @@ TagManager:
   - name: Foreground 1
     uniqueID: 923206821
     locked: 0
+  - name: Wand Lights
+    uniqueID: 2493457365
+    locked: 0
   - name: Foreground 2
     uniqueID: 2078691875
     locked: 0

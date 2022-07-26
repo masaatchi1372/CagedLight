@@ -1,9 +1,10 @@
 ﻿public enum GameState
 {
-    gameStarted,
-    playingLevel,        
-    gameWon,
-    gameLost,
-    gamePaused,    
-    restartGame
+    notPlaying,
+    loading,
+    playing,
+    won,
+    lost,
+    paused,
+    restart
 }
