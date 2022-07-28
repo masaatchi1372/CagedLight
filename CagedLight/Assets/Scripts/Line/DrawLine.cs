@@ -41,7 +41,7 @@ public class DrawLine : MonoBehaviour
 
         // check for left mouse button or touch
         // we'll start a new line if one hasn't already in the scene
-        if (Input.GetMouseButtonDown(0) && currentLine == null && (Settings.tryCount < Settings.triesAllowed))
+        if (Input.GetMouseButtonDown(0) && currentLine == null && GameManager.Instance.CanDrawLine())
         {
             // Initiating the line
             SpawnLine();
@@ -81,8 +81,8 @@ public class DrawLine : MonoBehaviour
                     currentLineComponent.lastDrawnTime = Time.realtimeSinceStartup;
                 }
 
-                // increase the tryCount variable for gameManager
-                Settings.tryCount++;
+                // we drew a line
+                EventManager.OnDrawLine();
             }
 
             // the line is created and there's no drawing in process
@@ -154,8 +154,11 @@ public class DrawLine : MonoBehaviour
             GameObject line = deletionQueue.Dequeue();
             objectPooler.PoolObject("Line", line);
 
-            // remove it frmo the list
+            // remove it from the list
             lineGameObjectsList.Remove(line);
+
+            // let the event manager knows we lost a turn
+            EventManager.OnLineDie();
         }
     }
 

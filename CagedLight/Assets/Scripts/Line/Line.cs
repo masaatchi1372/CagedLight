@@ -68,7 +68,8 @@ public class Line : MonoBehaviour, IObjectPooled
         timeIntervals.Add(0f);
         lastTime = Time.realtimeSinceStartup;
 
-        // we manually set lineRenderer first vertex position        
+        // we manually set lineRenderer first vertex position
+        lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, inputPositions[0]);
 
         // setting previous point for the purpose of continueLineFlow
@@ -93,9 +94,9 @@ public class Line : MonoBehaviour, IObjectPooled
     public bool OnPoolingObject()
     {
         inputPositions.Clear();
-        
+
         timeIntervals.Clear();
-        
+
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, Vector3.zero);
 
@@ -314,10 +315,9 @@ public class Line : MonoBehaviour, IObjectPooled
                 shouldDestroy = true;
                 break;
             case "Enemy":
-                // we perform an attack if there's any attacking component on our line
-                // TO DO: Attack
+                // let the event manager knows that one enemy has died
+                EventManager.OnEnemyDie();
                 break;
-
             default:
                 break;
         }
