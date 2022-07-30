@@ -10,6 +10,8 @@ public class Line : MonoBehaviour, IObjectPooled
     [Header("Line Properties")]
     [Space(3)]
     #endregion
+    [Tooltip("Line's power to deal damage to enemies")]
+    public int damage = 1;
     [Tooltip("The prefab to put on the head of the line")]
     public GameObject lineHeadPrefab;
     [Tooltip("The preferred distance between each point on the line")]
@@ -315,8 +317,11 @@ public class Line : MonoBehaviour, IObjectPooled
                 shouldDestroy = true;
                 break;
             case "Enemy":
-                // let the event manager knows that one enemy has died
-                EventManager.OnEnemyDie();
+                BatConroller batController;
+                if (other.gameObject.TryGetComponent<BatConroller>(out batController))
+                {
+                    batController.TakeDamage(damage);
+                }
                 break;
             default:
                 break;
