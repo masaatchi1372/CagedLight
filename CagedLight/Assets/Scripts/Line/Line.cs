@@ -251,9 +251,15 @@ public class Line : MonoBehaviour, IObjectPooled
     {
         // updating LineRenderer on our LinePrefab
         // remember we just have to set position on the visible points not all the inputPositions
+
+
         for (int i = 0; i < lineRenderer.positionCount; i++)
         {
-            lineRenderer.SetPosition(i, inputPositions[inputPositions.Count - lineRenderer.positionCount + i]);
+            Debug.Log($"Line info: inputPo: {inputPositions.Count}, lineRen: {lineRenderer.positionCount}, i:{i}");
+            if (inputPositions.Count - lineRenderer.positionCount + i >= 0 && inputPositions.Count - lineRenderer.positionCount + i <= inputPositions.Count)
+            {
+                lineRenderer.SetPosition(i, inputPositions[inputPositions.Count - lineRenderer.positionCount + i]);                
+            }
         }
 
         UpdateLineHeader();

@@ -41,7 +41,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             levelNo = levelsList[0].levelNo;
         }
 
-        Debug.Log($"Level No: {levelNo}");
+        // Debug.Log($"Level No: {levelNo}");
 
         // we start listening for events
         EventManager.EnemyDie += EventManagerOnEnemyDie;
@@ -67,7 +67,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             case GameState.loading:
                 LoadLevel(levelNo);
                 gameState = GameState.playing;
-                EventManager.OnLevelLoaded(levelsList[levelNo-1]);
+                EventManager.OnLevelLoaded(levelsList[levelNo - 1]);
                 break;
             case GameState.playing:
                 if (IsGameFinished())
@@ -88,7 +88,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             case GameState.restart:
                 LoadLevel(levelNo);
                 gameState = GameState.playing;
-                EventManager.OnLevelLoaded(levelsList[levelNo-1]);
+                EventManager.OnLevelLoaded(levelsList[levelNo - 1]);
                 break;
             default:
                 break;
@@ -108,7 +108,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
         enemyCount = levelsList[levelNo - 1].enemyCount;
         tryCount = 0;
 
-        Debug.Log($"-> Level No:{levelNo}, TA:{tryAllowed}, EN:{enemyCount}, TC:{tryCount}");
+        // Debug.Log($"-> Level No:{levelNo}, TA:{tryAllowed}, EN:{enemyCount}, TC:{tryCount}");
 
         Instantiate(levelsList[levelNo - 1].environmentPrefab, Vector3.zero, Quaternion.identity, levelParent);
         Instantiate(levelsList[levelNo - 1].levelPrefab, Vector3.zero, Quaternion.identity, levelParent);
@@ -149,7 +149,6 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
     private void EventManagerOnEnemyDie()
     {
         enemyCount--;
-        Debug.Log($"enemyCount decreased:{enemyCount}");
     }
 
     private void OnDestroy()

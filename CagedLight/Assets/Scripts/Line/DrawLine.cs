@@ -50,8 +50,7 @@ public class DrawLine : MonoBehaviour
         {
             // Initiating the line
             SpawnLine();
-            
-            Debug.Log($"lines: {lineGameObjectsList.Count}");
+
             // if we reached our limits, we should also put other lines to be destroyed
             if (lineGameObjectsList.Count >= AllowedLines)
             {
@@ -212,6 +211,6 @@ public class DrawLine : MonoBehaviour
     private void EventManagerOnLevelLoaded(LevelSO level)
     {
         AllowedLines = level.tryAllowed;
-        Debug.Log($"Allowed: {AllowedLines}");
+        // Debug.Log($"Allowed: {AllowedLines}");
     }
 }
