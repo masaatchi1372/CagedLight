@@ -8,9 +8,9 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
 {
     public Transform levelParent;
     public List<LevelSO> levelsList;
+    [HideInInspector] public GameState gameState;
     private int tryCount = 0;
     private LevelSO currentLevel;
-    private GameState gameState;
     private int levelNo;
     private int tryAllowed;
     private int enemyCount;
@@ -18,6 +18,9 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
 
     private void Start()
     {
+        //  for testing purposes
+        PlayerPrefs.DeleteAll();
+
         // the first gameState is notPlaying
         gameState = GameState.notPlaying;
 
@@ -45,7 +48,6 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
 
         // we start listening for events
         EventManager.EnemyDie += EventManagerOnEnemyDie;
-
     }
 
     void Update()
@@ -59,10 +61,10 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
                     PlayerPrefs.DeleteAll();
                 }
 
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    gameState = GameState.loading;
-                }
+                // if (Input.GetKeyDown(KeyCode.A))
+                // {
+                gameState = GameState.loading;
+                // }
                 break;
             case GameState.loading:
                 LoadLevel(levelNo);
@@ -86,6 +88,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             case GameState.paused:
                 break;
             case GameState.restart:
+                Flush();
                 LoadLevel(levelNo);
                 gameState = GameState.playing;
                 EventManager.OnLevelLoaded(levelsList[levelNo - 1]);

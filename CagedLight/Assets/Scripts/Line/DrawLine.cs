@@ -51,10 +51,11 @@ public class DrawLine : MonoBehaviour
             // Initiating the line
             SpawnLine();
 
-            // if we reached our limits, we should also put other lines to be destroyed
+            // if we reached our limits, we should also put other lines to be destroyed and restart the level
             if (lineGameObjectsList.Count >= AllowedLines)
             {
                 ShouldDestroyLines();
+                GameManager.Instance.gameState = GameState.restart;
             }
         }
 

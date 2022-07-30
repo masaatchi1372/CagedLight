@@ -255,7 +255,6 @@ public class Line : MonoBehaviour, IObjectPooled
 
         for (int i = 0; i < lineRenderer.positionCount; i++)
         {
-            Debug.Log($"Line info: inputPo: {inputPositions.Count}, lineRen: {lineRenderer.positionCount}, i:{i}");
             if (inputPositions.Count - lineRenderer.positionCount + i >= 0 && inputPositions.Count - lineRenderer.positionCount + i <= inputPositions.Count)
             {
                 lineRenderer.SetPosition(i, inputPositions[inputPositions.Count - lineRenderer.positionCount + i]);                

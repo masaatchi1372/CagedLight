@@ -716,6 +716,7 @@ MonoBehaviour:
   levelsList:
   - {fileID: 11400000, guid: ce38ac7aa01b14c488f2315fa197e06a, type: 2}
   - {fileID: 11400000, guid: f14c97a1e3d09466f8ac89605f0e5718, type: 2}
+  gameState: 0
 --- !u!1 &1538638408
 GameObject:
   m_ObjectHideFlags: 0
