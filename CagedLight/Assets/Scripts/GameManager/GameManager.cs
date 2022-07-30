@@ -14,6 +14,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
     private int levelNo;
     private int tryAllowed;
     private int enemyCount;
+    private int gameRestartedCount = 0;
 
     private void Start()
     {
@@ -23,7 +24,15 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
         // loading player prefs
         if (PlayerPrefs.HasKey("currentLevel"))
         {
-            levelNo = levelsList[PlayerPrefs.GetInt("currentLevel") - 1].levelNo;
+            if (PlayerPrefs.GetInt("currentLevel") <= levelsList.Count)
+            {
+                levelNo = levelsList[PlayerPrefs.GetInt("currentLevel") - 1].levelNo;
+            }
+            else
+            {
+                PlayerPrefs.SetInt("currentLevel", 1);
+                levelNo = 1;
+            }
         }
         else // there's no currentLevel in PlayerPrefs which means it's the first time user opened the game
         {
@@ -32,14 +41,11 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             levelNo = levelsList[0].levelNo;
         }
 
-        Debug.Log($"Level No: {levelNo}");
+        // Debug.Log($"Level No: {levelNo}");
 
-        // we start listening for OnEnemyDie event
+        // we start listening for events
         EventManager.EnemyDie += EventManagerOnEnemyDie;
 
-        // we start listening for line events
-        EventManager.LineDie += EventManagerOnLineDie;
-        EventManager.DrawLine += EventManagerOnDrawLine;
     }
 
     void Update()
@@ -61,9 +67,13 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             case GameState.loading:
                 LoadLevel(levelNo);
                 gameState = GameState.playing;
+                EventManager.OnLevelLoaded(levelsList[levelNo - 1]);
                 break;
             case GameState.playing:
-                IsGameFinished();
+                if (IsGameFinished())
+                {
+                    EventManager.OnLevelFinished();
+                }
                 break;
             case GameState.lost:
                 Flush();
@@ -76,6 +86,9 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             case GameState.paused:
                 break;
             case GameState.restart:
+                LoadLevel(levelNo);
+                gameState = GameState.playing;
+                EventManager.OnLevelLoaded(levelsList[levelNo - 1]);
                 break;
             default:
                 break;
@@ -95,7 +108,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
         enemyCount = levelsList[levelNo - 1].enemyCount;
         tryCount = 0;
 
-        Debug.Log($"-> Level No:{levelNo}, TA:{tryAllowed}, EN:{enemyCount}, TC:{tryCount}");
+        // Debug.Log($"-> Level No:{levelNo}, TA:{tryAllowed}, EN:{enemyCount}, TC:{tryCount}");
 
         Instantiate(levelsList[levelNo - 1].environmentPrefab, Vector3.zero, Quaternion.identity, levelParent);
         Instantiate(levelsList[levelNo - 1].levelPrefab, Vector3.zero, Quaternion.identity, levelParent);
@@ -116,11 +129,11 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
             return true;
         }
 
-        if (tryAllowed != -1 && tryCount >= tryAllowed)
-        {
-            gameState = GameState.lost; // we lost and can't cast any more spells, tryCount is zero
-            return true;
-        }
+        // if (tryAllowed != -1 && tryCount >= tryAllowed)
+        // {
+        //     gameState = GameState.lost; // we lost and can't cast any more spells, tryCount is zero
+        //     return true;
+        // }        
 
         return false;
     }
@@ -134,36 +147,13 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
     }
 
     private void EventManagerOnEnemyDie()
-    {        
+    {
         enemyCount--;
-        Debug.Log($"enemyCount decreased:{enemyCount}");
-    }
-
-    public void EventManagerOnLineDie()
-    {
-        // Debug.Log("tryCount Decreased");
-        // tryCount--;
-    }
-
-    public void EventManagerOnDrawLine()
-    {
-        tryCount++;
-        Debug.Log($"tryCount Increased:{tryCount}");
-    }
-
-    public bool CanDrawLine()
-    {
-        if (tryAllowed == -1 || tryCount < tryAllowed || gameState != GameState.playing)
-        {
-            return true;
-        }
-        return false;
     }
 
     private void OnDestroy()
     {
         EventManager.EnemyDie -= EventManagerOnEnemyDie;
-        EventManager.LineDie -= EventManagerOnLineDie;
     }
 
     #region Unity Editor

@@ -10,7 +10,7 @@ public class LevelSO : ScriptableObject
     [Tooltip("Level Number")]
     public int levelNo = 0;
     [Tooltip("how many turns does player have for this level? LEAVE -1 FOR INFINITE TRIES")]
-    public int tryAllowed = -1;
+    public int tryAllowed = 1;
     [Tooltip("how many enemies are there in the level")]
     public int enemyCount = 0;
     [Tooltip("populate this part with the level prefab")]

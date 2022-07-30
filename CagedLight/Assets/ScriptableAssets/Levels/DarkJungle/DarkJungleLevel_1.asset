@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DarkJungleLevel_1
   m_EditorClassIdentifier: 
   levelNo: 1
-  tryAllowed: -1
+  tryAllowed: 1
   enemyCount: 1
   levelPrefab: {fileID: 196254678167924343, guid: 84a21f51baf90480596be96021f64509, type: 3}
   environmentPrefab: {fileID: 2129403055115024725, guid: bf1e0e830f0fd4cda9cc2d0c2b5a185c, type: 3}

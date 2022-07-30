@@ -17,4 +17,10 @@ public class EventManager : SingletoneMonoBehaviour<EventManager>
 
     public static event UnityAction DrawLine;
     public static void OnDrawLine() => DrawLine?.Invoke();
+
+    public static event UnityAction LevelFinished;
+    public static void OnLevelFinished() => LevelFinished?.Invoke();
+
+    public static event UnityAction<LevelSO> LevelLoaded;
+    public static void OnLevelLoaded(LevelSO level) => LevelLoaded?.Invoke(level);
 }

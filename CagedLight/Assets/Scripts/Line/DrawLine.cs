@@ -10,6 +10,7 @@ public class DrawLine : MonoBehaviour
     private Queue<GameObject> deletionQueue;
     private Camera mainCam;
     private ObjectPooler objectPooler;
+    private int AllowedLines;
 
     private void Start()
     {
@@ -18,6 +19,10 @@ public class DrawLine : MonoBehaviour
         deletionQueue = new Queue<GameObject>();
         objectPooler = ObjectPooler.Instance;
         mainCam = Camera.main;
+
+        // subscribing to Events
+        EventManager.LevelFinished += EventManagerOnLevelFinished;
+        EventManager.LevelLoaded += EventManagerOnLevelLoaded;
     }
 
     void Update()
@@ -41,10 +46,16 @@ public class DrawLine : MonoBehaviour
 
         // check for left mouse button or touch
         // we'll start a new line if one hasn't already in the scene
-        if (Input.GetMouseButtonDown(0) && currentLine == null && GameManager.Instance.CanDrawLine())
+        if (Input.GetMouseButtonDown(0) && currentLine == null)
         {
             // Initiating the line
             SpawnLine();
+
+            // if we reached our limits, we should also put other lines to be destroyed
+            if (lineGameObjectsList.Count >= AllowedLines)
+            {
+                ShouldDestroyLines();
+            }
         }
 
         // on Drag
@@ -173,5 +184,33 @@ public class DrawLine : MonoBehaviour
                 deletionQueue.Enqueue(line);
             }
         }
+    }
+
+    private void ShouldDestroyLines()
+    {
+        foreach (GameObject line in lineGameObjectsList)
+        {
+            if (line != null)
+            {
+                line.GetComponent<Line>().shouldDestroy = true;
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.LevelFinished -= EventManagerOnLevelFinished;
+        EventManager.LevelLoaded -= EventManagerOnLevelLoaded;
+    }
+
+    private void EventManagerOnLevelFinished()
+    {
+        DestroyLines();
+    }
+
+    private void EventManagerOnLevelLoaded(LevelSO level)
+    {
+        AllowedLines = level.tryAllowed;
+        // Debug.Log($"Allowed: {AllowedLines}");
     }
 }
