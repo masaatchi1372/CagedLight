@@ -361,7 +361,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1635513, y: 1}
+    m_SensorSize: {x: 1.8337469, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -716,6 +716,24 @@ MonoBehaviour:
   levelsList:
   - {fileID: 11400000, guid: ce38ac7aa01b14c488f2315fa197e06a, type: 2}
   - {fileID: 11400000, guid: f14c97a1e3d09466f8ac89605f0e5718, type: 2}
+  - {fileID: 11400000, guid: cf46755447c794ef6bbd555ce31d8b06, type: 2}
+  - {fileID: 11400000, guid: 67759052192fe4cbd94abea71427aebe, type: 2}
+  - {fileID: 11400000, guid: e75675aa63b164100bc844b984f8b789, type: 2}
+  - {fileID: 11400000, guid: 02f7a87b6993843098c87da5c4a29408, type: 2}
+  - {fileID: 11400000, guid: 713440a22c29f4e1ba1cfea9331e7f28, type: 2}
+  - {fileID: 11400000, guid: 66fa73d63416849358d0c5a10e05683e, type: 2}
+  - {fileID: 11400000, guid: b8eaf66d61a5544ed8c209177a5fc2bf, type: 2}
+  - {fileID: 11400000, guid: 46f193efaa6754acb9a5b00de210b324, type: 2}
+  - {fileID: 11400000, guid: 19a08bf508564465d841b303d95bdf80, type: 2}
+  - {fileID: 11400000, guid: 6f63affb141d04db6904e02a775c3f1e, type: 2}
+  - {fileID: 11400000, guid: 829d2da5fe9964685977dabeea60ef8c, type: 2}
+  - {fileID: 11400000, guid: 23c73d842fdd64b66a88c3e18fba0413, type: 2}
+  - {fileID: 11400000, guid: 29ea722a66d294370ae90c2258a6741e, type: 2}
+  - {fileID: 11400000, guid: 41844735ba14a4ceb879c819ab473278, type: 2}
+  - {fileID: 11400000, guid: 4378efa94d26646c4a7d235a4fb55a97, type: 2}
+  - {fileID: 11400000, guid: 1e4fc931e974e422bbbc92ad60a489b1, type: 2}
+  - {fileID: 11400000, guid: 689bc4c354836407cadc3e34b01bb933, type: 2}
+  - {fileID: 11400000, guid: c715fcbf5df904ad188eaa92ddc28c4d, type: 2}
   gameState: 0
 --- !u!1 &1538638408
 GameObject:
