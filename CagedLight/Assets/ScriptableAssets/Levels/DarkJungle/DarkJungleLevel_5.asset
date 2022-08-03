@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da094133836a4a6bb1c00c6fb4cc1b2, type: 3}
+  m_Name: DarkJungleLevel_5
+  m_EditorClassIdentifier: 
+  levelNo: 5
+  tryAllowed: 1
+  enemyCount: 4
+  levelPrefab: {fileID: 196254678167924343, guid: 8eeceb3710e4a46878bce31c3101d50b, type: 3}
+  environmentPrefab: {fileID: 2129403055115024725, guid: bf1e0e830f0fd4cda9cc2d0c2b5a185c, type: 3}

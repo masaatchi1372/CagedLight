@@ -11,6 +11,7 @@ public class DrawLine : MonoBehaviour
     private Camera mainCam;
     private ObjectPooler objectPooler;
     private int AllowedLines;
+    private int drawnLinesCount = 0;
 
     private void Start()
     {
@@ -34,6 +35,12 @@ public class DrawLine : MonoBehaviour
             currentLineComponent = currentLine.GetComponent<Line>();
         }
 
+        // we tried out best but it seems like we failed (we have no active lines and draw count is equal to Allowed count)
+        if (lineGameObjectsList.Count == 0 && drawnLinesCount >= AllowedLines)
+        {
+            RestartLevel();
+        }
+
         // on right mouse button all lines would be destroyed
         if (Input.GetMouseButtonDown(1))
         {
@@ -51,11 +58,10 @@ public class DrawLine : MonoBehaviour
             // Initiating the line
             SpawnLine();
 
-            // if we reached our limits, we should also put other lines to be destroyed and restart the level
+            // if we reached our limits, we should also put other lines to be destroyed and fire restart level event to summon all obstacles again
             if (lineGameObjectsList.Count >= AllowedLines)
             {
-                ShouldDestroyLines();
-                GameManager.Instance.gameState = GameState.restart;
+                RestartLevel();
             }
         }
 
@@ -94,7 +100,7 @@ public class DrawLine : MonoBehaviour
                 }
 
                 // we drew a line
-                EventManager.OnDrawLine();
+                drawnLinesCount++;
             }
 
             // the line is created and there's no drawing in process
@@ -104,9 +110,6 @@ public class DrawLine : MonoBehaviour
         // each line should be continue its flow
         if (lineGameObjectsList.Count > 0)
         {
-            // we have an active line
-            Settings.hasActiveLine = true;
-
             foreach (GameObject line in lineGameObjectsList)
             {
                 if (line != null)
@@ -117,7 +120,7 @@ public class DrawLine : MonoBehaviour
                         continue;
                     }
 
-                    // if there's still one point on the line which user can see (it's in the screen) we should continue the line flow
+                    // if there's still one point on the line which user can see (it's in the screen) we should continue the line flow and if not we should destroy it
                     if (lineComponent.inputPositions.Count < 2 || !lineComponent.HasAtLeaseOnePointInScreen())
                     {
                         deletionQueue.Enqueue(line);
@@ -141,14 +144,8 @@ public class DrawLine : MonoBehaviour
             }
         }
 
-        // we have no active line
-        if (currentLine == null && lineGameObjectsList.Count == 0)
-        {
-            Settings.hasActiveLine = false;
-        }
-
         ClearDeletionQueue();
-    }
+    }    
 
     // Starting line creation process
     private void SpawnLine()
@@ -202,6 +199,13 @@ public class DrawLine : MonoBehaviour
     {
         EventManager.LevelFinished -= EventManagerOnLevelFinished;
         EventManager.LevelLoaded -= EventManagerOnLevelLoaded;
+    }
+
+    private void RestartLevel()
+    {
+        drawnLinesCount = 0;
+        ShouldDestroyLines();
+        GameManager.Instance.gameState = GameState.restart;
     }
 
     private void EventManagerOnLevelFinished()

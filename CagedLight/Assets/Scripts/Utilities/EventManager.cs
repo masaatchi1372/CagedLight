@@ -15,9 +15,6 @@ public class EventManager : SingletoneMonoBehaviour<EventManager>
     public static event UnityAction LineDie;
     public static void OnLineDie() => LineDie?.Invoke();
 
-    public static event UnityAction DrawLine;
-    public static void OnDrawLine() => DrawLine?.Invoke();
-
     public static event UnityAction LevelFinished;
     public static void OnLevelFinished() => LevelFinished?.Invoke();
 

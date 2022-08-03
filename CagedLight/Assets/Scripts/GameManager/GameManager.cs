@@ -9,7 +9,6 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
     public Transform levelParent;
     public List<LevelSO> levelsList;
     [HideInInspector] public GameState gameState;
-    private int tryCount = 0;
     private LevelSO currentLevel;
     private int levelNo;
     private int tryAllowed;
@@ -109,7 +108,6 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
         levelNo = levelsList[levelNo - 1].levelNo;
         tryAllowed = levelsList[levelNo - 1].tryAllowed;
         enemyCount = levelsList[levelNo - 1].enemyCount;
-        tryCount = 0;
 
         // Debug.Log($"-> Level No:{levelNo}, TA:{tryAllowed}, EN:{enemyCount}, TC:{tryCount}");
 
@@ -131,12 +129,6 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
 
             return true;
         }
-
-        // if (tryAllowed != -1 && tryCount >= tryAllowed)
-        // {
-        //     gameState = GameState.lost; // we lost and can't cast any more spells, tryCount is zero
-        //     return true;
-        // }        
 
         return false;
     }
