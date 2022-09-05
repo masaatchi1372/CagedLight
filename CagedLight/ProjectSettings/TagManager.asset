@@ -44,9 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Sky
-    uniqueID: 2768657251
-    locked: 0
   - name: Background 1
     uniqueID: 4164452313
     locked: 0
@@ -56,7 +53,7 @@ TagManager:
   - name: Foreground 1
     uniqueID: 923206821
     locked: 0
-  - name: Wand Lights
+  - name: Line Renderer
     uniqueID: 2493457365
     locked: 0
   - name: Foreground 2

@@ -73,7 +73,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2078691875
-  m_SortingLayer: 6
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -84,8 +84,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.18571281
+        time: 0.0043296814
+        value: 0.3940487
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -93,14 +93,14 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.40524715
-        value: 0.63085115
-        inSlope: 0
-        outSlope: 0
+        time: 0.23641628
+        value: 0.7975165
+        inSlope: 0.01250095
+        outSlope: 0.01250095
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.48196638
       - serializedVersion: 3
         time: 0.99438477
         value: 0.38778305
@@ -145,8 +145,8 @@ LineRenderer:
     numCornerVertices: 5
     numCapVertices: 5
     alignment: 0
-    textureMode: 0
-    shadowBias: 0.5
+    textureMode: 1
+    shadowBias: 0
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad416b3c16b54a658166268270d76de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
   lineHeadPrefab: {fileID: 4085328676873557299, guid: f0197644e8322476cb0d6e9867695550, type: 3}
   preferredPointsDistance: 0.03
   lineLengthInPoints: 15
