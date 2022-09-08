@@ -16,4 +16,4 @@ MonoBehaviour:
   tryAllowed: 1
   enemyCount: 3
   levelPrefab: {fileID: 196254678167924343, guid: 23a095e2bc48b45db9f612fa73026536, type: 3}
-  environmentPrefab: {fileID: 2129403055115024725, guid: bf1e0e830f0fd4cda9cc2d0c2b5a185c, type: 3}
+  environmentPrefab: {fileID: 2725914016949629931, guid: a15002f22178f46818fc74ed425c6f10, type: 3}
