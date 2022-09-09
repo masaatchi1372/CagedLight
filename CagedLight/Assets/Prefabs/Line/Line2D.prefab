@@ -84,16 +84,16 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.0043296814
-        value: 0.3940487
-        inSlope: 0
-        outSlope: 0
+        value: 0.9
+        inSlope: -0.043750208
+        outSlope: -0.043750208
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 1
       - serializedVersion: 3
-        time: 0.23641628
-        value: 0.7975165
+        time: 0.23268402
+        value: 1
         inSlope: 0.01250095
         outSlope: 0.01250095
         tangentMode: 0
@@ -102,12 +102,12 @@ LineRenderer:
         outWeight: 0.48196638
       - serializedVersion: 3
         time: 0.99438477
-        value: 0.38778305
-        inSlope: 0.39130443
-        outSlope: 0.39130443
+        value: 0.9
+        inSlope: -0
+        outSlope: -0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.67647064
+        inWeight: 0.40751186
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -144,7 +144,7 @@ LineRenderer:
     numCornerVertices: 5
     numCapVertices: 5
     alignment: 0
-    textureMode: 1
+    textureMode: 0
     shadowBias: 0
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -187,6 +187,7 @@ MonoBehaviour:
   lineLengthInPoints: 15
   lineRemovalSpeed: 0.01
   lineHeadRotationSpeed: 700
+  drawingState: 0
   lastTime: 0
   lastPointRemovalTime: 0
   shouldDestroy: 0

@@ -28,19 +28,6 @@ public class DrawLine : MonoBehaviour
 
     void Update()
     {
-        // caching currentLine if one exist
-        Line currentLineComponent = null;
-        if (currentLine != null)
-        {
-            currentLineComponent = currentLine.GetComponent<Line>();
-        }
-
-        // we tried out best but it seems like we failed (we have no active lines and draw count is equal to Allowed count)
-        if (lineGameObjectsList.Count == 0 && drawnLinesCount >= AllowedLines)
-        {
-            RestartLevel();
-        }
-
         // on right mouse button all lines would be destroyed
         if (Input.GetMouseButtonDown(1))
         {
@@ -48,21 +35,30 @@ public class DrawLine : MonoBehaviour
             {
                 DestroyLines();
             }
-            currentLine = null;
         }
 
         // check for left mouse button or touch
         // we'll start a new line if one hasn't already in the scene
         if (Input.GetMouseButtonDown(0) && currentLine == null)
         {
-            // Initiating the line
-            SpawnLine();
-
             // if we reached our limits, we should also put other lines to be destroyed and fire restart level event to summon all obstacles again
             if (lineGameObjectsList.Count >= AllowedLines)
             {
                 RestartLevel();
             }
+
+            // Initiating the line
+            SpawnLine();
+
+            // we drew a new line
+            drawnLinesCount++;
+        }
+
+        // caching currentLine if one exist
+        Line currentLineComponent = null;
+        if (currentLine != null)
+        {
+            currentLineComponent = currentLine.GetComponent<Line>();
         }
 
         // on Drag
@@ -94,9 +90,6 @@ public class DrawLine : MonoBehaviour
                     currentLineComponent.lastDrawnTime = Time.realtimeSinceStartup;
                     currentLineComponent.drawingState = false;
                 }
-
-                // we drew a line
-                drawnLinesCount++;
             }
 
             // the line is created and there's no drawing in process
@@ -141,7 +134,13 @@ public class DrawLine : MonoBehaviour
         }
 
         ClearDeletionQueue();
-    }    
+
+        // we tried our best but it seems like we failed (we have no active lines and draw count is equal to Allowed count)
+        if (lineGameObjectsList.Count == 0 && drawnLinesCount > AllowedLines)
+        {
+            RestartLevel();
+        }
+    }
 
     // Starting line creation process
     private void SpawnLine()
@@ -199,8 +198,6 @@ public class DrawLine : MonoBehaviour
 
     private void RestartLevel()
     {
-        drawnLinesCount = 0;
-        ShouldDestroyLines();
         GameManager.Instance.gameState = GameState.restart;
     }
 

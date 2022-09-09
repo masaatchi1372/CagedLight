@@ -30,10 +30,13 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
             // creating objects according to the size of each pool
             for (int i = 0; i < pool.size; i++)
             {
-                GameObject obj = Instantiate(pool.prefab, new Vector3(0, 0, 0), Quaternion.identity);
+                GameObject obj = Instantiate(pool.prefab, Vector3.zero, Quaternion.identity);
 
                 // we deactivate it so it's not shown in the screen
                 obj.SetActive(false);
+
+                // append a number to the name of the obj
+                obj.name = obj.name + i;
 
                 // we push it into the objectPool
                 objectPool.Enqueue(obj);
@@ -49,30 +52,29 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
     {
         if (!poolDictionary.ContainsKey(tag))
         {
-            // Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
+            Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
             return null;
         }
 
         // we get an object from the pool
         if (poolDictionary[tag].Count < 1)
         {
-            // Debug.Log($"count:{poolDictionary[tag].Count} Queue is empty, cannot spawn an object");
+            Debug.Log($"count:{poolDictionary[tag].Count} Queue is empty, cannot spawn an object");
             return null;
         }
 
         GameObject objectToSpawn;
         if (!poolDictionary[tag].TryDequeue(out objectToSpawn) )
         {
-            // Debug.Log($"couldn't dequeue object from the pool");
+            Debug.Log($"couldn't dequeue object from the pool");
             return null;
         }
+
+        Debug.Log($"name: {objectToSpawn.name}");
 
         // setting the transforms
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
-
-        // we activate it
-        objectToSpawn.SetActive(true);
 
         // calling the OnObjectSpawn method
         IObjectPooled objPoolInterface = objectToSpawn.GetComponent<Line>();
@@ -81,8 +83,8 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
             objPoolInterface.OnSpawnObjectPooled();
         }
 
-        // // we put it back to the queue
-        // poolDictionary[tag].Enqueue(objectToSpawn);
+        // we activate it
+        objectToSpawn.SetActive(true);
 
         return objectToSpawn;
     }
@@ -91,7 +93,7 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
     {
         if (!poolDictionary.ContainsKey(tag))
         {
-            // Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
+            Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
             return false;
         }
 
@@ -111,7 +113,6 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
 
         // put back in the poolDictionary
         poolDictionary[tag].Enqueue(objToPool);
-        // Debug.Log($"here {poolDictionary[tag].Count}");
 
         return true;
     }

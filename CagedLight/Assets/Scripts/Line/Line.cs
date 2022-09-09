@@ -105,8 +105,9 @@ public class Line : MonoBehaviour, IObjectPooled
         // lineRenderer.SetPosition(0, Vector3.zero);
 
         shouldDestroy = false;
+        drawingState = false;
 
-        return false;
+        return true;
     }
 
     private void Update()
