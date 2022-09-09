@@ -9,7 +9,8 @@ CagedLight/[Bb]uild/
 CagedLight/[Bb]uilds/
 CagedLight/[Ll]ogs/
 CagedLight/[Mm]emoryCaptures/
-
+[Bb]uild/
+[Bb]uilds/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/CagedLight[Aa]ssets/**/*.meta
