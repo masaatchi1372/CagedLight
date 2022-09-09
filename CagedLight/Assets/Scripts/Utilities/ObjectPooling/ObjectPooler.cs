@@ -110,7 +110,7 @@ public class ObjectPooler : SingletoneMonoBehaviour<ObjectPooler>
         }
 
         // put back in the poolDictionary
-        poolDictionary[tag].Enqueue(objToPool);
+        poolDictionary[tag].Enqueue(objToPool); // TODO check if it's not already in the Queue then enqueue it
 
         return true;
     }
