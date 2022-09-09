@@ -22,7 +22,8 @@ public class Line : MonoBehaviour, IObjectPooled
     public float lineRemovalSpeed = 0.01f;
     [Tooltip("How fast should the line header rotate towards the direction of the line")]
     public float lineHeadRotationSpeed = 1f;
-    [Tooltip("If line head rotatino is below this threshold, it won't change direction. if You choose low numbers, line header become more noisy")]
+    [Tooltip("when player's drawing, it's true and when he's finished it'll be false")]
+    public bool drawingState = false;
 
     [HideInInspector] public List<Vector3> inputPositions { get; set; }// points of the drawing line
     [HideInInspector] public List<float> timeIntervals { get; set; } // time interval between each point    
@@ -36,7 +37,7 @@ public class Line : MonoBehaviour, IObjectPooled
     private GameObject lineHead;
     private Vector3 previousPoint; // we keep last point position to know where to put the next point on our line in continueLineFlow function        
     private Camera mainCam;
-    private Quaternion toRotation;
+    private Quaternion toRotation;    
 
 
     public void OnSpawnObjectPooled()
@@ -51,6 +52,7 @@ public class Line : MonoBehaviour, IObjectPooled
             timeIntervals = new List<float>();
         }
         mainCam = Camera.main;
+        drawingState = true;
 
         // we should clear the inputPosition & timeIntervals array
         inputPositions.Clear();
@@ -90,7 +92,7 @@ public class Line : MonoBehaviour, IObjectPooled
         }
 
         // now we activate the edgecollider on the line
-        edgeCollider2D.enabled = false;
+        edgeCollider2D.enabled = true;
     }
 
     public bool OnPoolingObject()
@@ -99,8 +101,8 @@ public class Line : MonoBehaviour, IObjectPooled
 
         timeIntervals.Clear();
 
-        lineRenderer.positionCount = 1;
-        lineRenderer.SetPosition(0, Vector3.zero);
+        lineRenderer.positionCount = 0;
+        // lineRenderer.SetPosition(0, Vector3.zero);
 
         shouldDestroy = false;
 
@@ -309,16 +311,18 @@ public class Line : MonoBehaviour, IObjectPooled
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // // if we hit ANYTHING we will disable the collider and line should be destroyed
-        // edgeCollider2D.enabled = false;
-        // shouldDestroy = true;
-
         Debug.Log($"object: {other.gameObject.tag}");
+
+        if (drawingState)
+        {
+            // we hit an object, so we add the position of that object as the last point and drawing state should be finished
+            AddNewPoint(other.transform.position);
+            drawingState = false;
+        }
 
         switch (other.gameObject.tag)
         {
             case "Obstacle":
-                // Settings.shouldLose = true;
                 shouldDestroy = true;
                 break;
             case "Enemy":

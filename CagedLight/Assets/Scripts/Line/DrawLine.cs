@@ -74,22 +74,17 @@ public class DrawLine : MonoBehaviour
             tempInput = mainCam.ScreenToWorldPoint(tempInput);
 
             // if point distance is enough, we'll add a new point to the currentLine
-            if (currentLineComponent != null && currentLineComponent.CanAddNewPoint(tempInput))
+            if (currentLineComponent != null && currentLineComponent.CanAddNewPoint(tempInput) && currentLineComponent.drawingState)
             {
                 currentLineComponent.AddNewPoint(tempInput);
             }
         }
 
         // on release
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) || (currentLineComponent && !currentLineComponent.drawingState))
         {
             if (currentLine != null)
             {
-                // now we activate the edgecollider on the line
-                EdgeCollider2D edgeCollider2D;
-                currentLine.TryGetComponent<EdgeCollider2D>(out edgeCollider2D);
-                edgeCollider2D.enabled = true;
-
                 // drawing is finished and we add the line to the lineList
                 lineGameObjectsList.Add(currentLine);
 
@@ -97,6 +92,7 @@ public class DrawLine : MonoBehaviour
                 if (currentLineComponent != null)
                 {
                     currentLineComponent.lastDrawnTime = Time.realtimeSinceStartup;
+                    currentLineComponent.drawingState = false;
                 }
 
                 // we drew a line
@@ -215,7 +211,8 @@ public class DrawLine : MonoBehaviour
 
     private void EventManagerOnLevelLoaded(LevelSO level)
     {
+        drawnLinesCount = 0;
         AllowedLines = level.tryAllowed;
-        // Debug.Log($"Allowed: {AllowedLines}");
+        ShouldDestroyLines();
     }
 }
