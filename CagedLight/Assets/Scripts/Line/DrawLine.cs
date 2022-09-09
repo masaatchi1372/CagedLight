@@ -173,7 +173,6 @@ public class DrawLine : MonoBehaviour
         {
             if (line != null)
             {
-                objectPooler.PoolObject("Line", line);
                 deletionQueue.Enqueue(line);
             }
         }

@@ -896,7 +896,7 @@ MonoBehaviour:
   pools:
   - tag: Line
     prefab: {fileID: 5977152468758313169, guid: c1a4df291bbe342a390c4b51ecb1ab05, type: 3}
-    size: 3
+    size: 5
 --- !u!4 &1833665157
 Transform:
   m_ObjectHideFlags: 0
