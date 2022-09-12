@@ -18,7 +18,7 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
     private void Start()
     {
         //  for testing purposes
-        // PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
 
         // the first gameState is notPlaying
         gameState = GameState.notPlaying;

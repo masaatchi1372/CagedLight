@@ -31,10 +31,7 @@ public class DrawLine : MonoBehaviour
         // on right mouse button all lines would be destroyed
         if (Input.GetMouseButtonDown(1))
         {
-            if (lineGameObjectsList.Count > 0)
-            {
-                DestroyLines();
-            }
+            RestartLevel();
         }
 
         // check for left mouse button or touch
@@ -48,10 +45,7 @@ public class DrawLine : MonoBehaviour
             }
 
             // Initiating the line
-            SpawnLine();
-
-            // we drew a new line
-            drawnLinesCount++;
+            SpawnLine();            
         }
 
         // caching currentLine if one exist
@@ -91,6 +85,9 @@ public class DrawLine : MonoBehaviour
                     currentLineComponent.drawingState = false;
                 }
             }
+
+            // we drew a new line
+            drawnLinesCount++;
 
             // the line is created and there's no drawing in process
             currentLine = null;
@@ -136,7 +133,8 @@ public class DrawLine : MonoBehaviour
         ClearDeletionQueue();
 
         // we tried our best but it seems like we failed (we have no active lines and draw count is equal to Allowed count)
-        if (lineGameObjectsList.Count == 0 && drawnLinesCount > AllowedLines)
+        Debug.Log("draw:" + drawnLinesCount);
+        if (lineGameObjectsList.Count == 0 && drawnLinesCount >= AllowedLines)
         {
             RestartLevel();
         }
@@ -169,13 +167,14 @@ public class DrawLine : MonoBehaviour
     // destroy all line in lineGameObjectsList
     private void DestroyLines()
     {
-        foreach (GameObject line in lineGameObjectsList)
-        {
-            if (line != null)
-            {
-                deletionQueue.Enqueue(line);
-            }
-        }
+        // foreach (GameObject line in lineGameObjectsList)
+        // {
+        //     if (line != null)
+        //     {
+        //         deletionQueue.Enqueue(line);
+        //     }
+        // }
+        ShouldDestroyLines();
     }
 
     private void ShouldDestroyLines()

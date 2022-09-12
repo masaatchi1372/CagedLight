@@ -84,7 +84,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.0043296814
-        value: 0.9
+        value: 0.98
         inSlope: -0.043750208
         outSlope: -0.043750208
         tangentMode: 0
@@ -102,7 +102,7 @@ LineRenderer:
         outWeight: 0.48196638
       - serializedVersion: 3
         time: 0.99438477
-        value: 0.9
+        value: 0.98
         inSlope: -0
         outSlope: -0
         tangentMode: 0
@@ -114,8 +114,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.9386792, g: 0.97874093, b: 1, a: 1}
+      key1: {r: 0.8726415, g: 0.9642521, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -141,8 +141,8 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 5
-    numCapVertices: 5
+    numCornerVertices: 2
+    numCapVertices: 2
     alignment: 0
     textureMode: 0
     shadowBias: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   lineHeadPrefab: {fileID: 4085328676873557299, guid: f0197644e8322476cb0d6e9867695550, type: 3}
-  preferredPointsDistance: 0.03
+  preferredPointsDistance: 0.01
   lineLengthInPoints: 15
   lineRemovalSpeed: 0.01
   lineHeadRotationSpeed: 700

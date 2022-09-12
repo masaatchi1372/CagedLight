@@ -37,7 +37,7 @@ public class Line : MonoBehaviour, IObjectPooled
     private GameObject lineHead;
     private Vector3 previousPoint; // we keep last point position to know where to put the next point on our line in continueLineFlow function        
     private Camera mainCam;
-    private Quaternion toRotation;    
+    private Quaternion toRotation;
 
 
     public void OnSpawnObjectPooled()
@@ -102,7 +102,8 @@ public class Line : MonoBehaviour, IObjectPooled
         timeIntervals.Clear();
 
         lineRenderer.positionCount = 0;
-        // lineRenderer.SetPosition(0, Vector3.zero);
+
+        edgeCollider2D.SetPoints(new List<Vector2>());
 
         shouldDestroy = false;
         drawingState = false;
@@ -115,6 +116,15 @@ public class Line : MonoBehaviour, IObjectPooled
         if (toRotation != null && lineHead != null)
         {
             lineHead.transform.rotation = Quaternion.RotateTowards(lineHead.transform.rotation, toRotation, lineHeadRotationSpeed * Time.deltaTime);
+        }
+
+        if (shouldDestroy)
+        {
+            edgeCollider2D.enabled = false;
+        }
+        else
+        {
+            edgeCollider2D.enabled = true;
         }
     }
 
@@ -260,7 +270,7 @@ public class Line : MonoBehaviour, IObjectPooled
         {
             if (inputPositions.Count - lineRenderer.positionCount + i >= 0 && inputPositions.Count - lineRenderer.positionCount + i <= inputPositions.Count)
             {
-                lineRenderer.SetPosition(i, inputPositions[inputPositions.Count - lineRenderer.positionCount + i]);                
+                lineRenderer.SetPosition(i, inputPositions[inputPositions.Count - lineRenderer.positionCount + i]);
             }
         }
 
@@ -314,19 +324,21 @@ public class Line : MonoBehaviour, IObjectPooled
     {
         Debug.Log($"object: {other.gameObject.tag}");
 
-        if (drawingState)
-        {
-            // we hit an object, so we add the position of that object as the last point and drawing state should be finished
-            AddNewPoint(other.transform.position);
-            drawingState = false;
-        }
-
         switch (other.gameObject.tag)
         {
             case "Obstacle":
                 shouldDestroy = true;
                 break;
             case "Enemy":
+                if (drawingState)
+                {
+                    // we hit an enemy in the middle of drawing, 
+                    // so we add the position of it as the last point and drawing state should be finished
+                    Vector3 tmpInput = new Vector3(other.transform.position.x, other.transform.position.y - 0.1f, inputPositions[0].z);
+                    AddNewPoint( tmpInput );
+                    drawingState = false;
+                }
+
                 BatConroller batController;
                 if (other.gameObject.TryGetComponent<BatConroller>(out batController))
                 {
