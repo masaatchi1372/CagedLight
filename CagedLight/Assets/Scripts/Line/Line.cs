@@ -339,8 +339,8 @@ public class Line : MonoBehaviour, IObjectPooled
                     drawingState = false;
                 }
 
-                BatConroller batController;
-                if (other.gameObject.TryGetComponent<BatConroller>(out batController))
+                AlienConroller batController;
+                if (other.gameObject.TryGetComponent<AlienConroller>(out batController))
                 {
                     batController.TakeDamage(damage);
                 }

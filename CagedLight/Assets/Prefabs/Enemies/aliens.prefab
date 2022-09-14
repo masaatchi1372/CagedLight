@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6707012035419681568}
   - component: {fileID: 8194672942922250770}
   - component: {fileID: 5906180959625843686}
+  - component: {fileID: 2451598870033546505}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Enemy
@@ -158,6 +159,26 @@ PolygonCollider2D:
       - {x: 0.44038463, y: -0.070102036}
       - {x: 0.4352134, y: 0.14146326}
       - {x: 0.29092985, y: 0.23079237}
+--- !u!95 &2451598870033546505
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473485738846377873}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 196d780ee17214ec5bc669acfb0eaa04, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1189977707094346045
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1189977707094345923}
   m_Layer: 0
-  m_Name: bat
+  m_Name: aliens
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

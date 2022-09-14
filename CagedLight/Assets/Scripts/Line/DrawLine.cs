@@ -133,7 +133,6 @@ public class DrawLine : MonoBehaviour
         ClearDeletionQueue();
 
         // we tried our best but it seems like we failed (we have no active lines and draw count is equal to Allowed count)
-        Debug.Log("draw:" + drawnLinesCount);
         if (lineGameObjectsList.Count == 0 && drawnLinesCount >= AllowedLines)
         {
             RestartLevel();
