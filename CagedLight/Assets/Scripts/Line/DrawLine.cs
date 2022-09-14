@@ -11,7 +11,7 @@ public class DrawLine : MonoBehaviour
     private Camera mainCam;
     private ObjectPooler objectPooler;
     private int AllowedLines;
-    private int drawnLinesCount = 0;
+    private int drawnLinesCount = -1;
 
     private void Start()
     {
@@ -35,8 +35,8 @@ public class DrawLine : MonoBehaviour
         }
 
         // check for left mouse button or touch
-        // we'll start a new line if one hasn't already in the scene
-        if (Input.GetMouseButtonDown(0) && currentLine == null)
+        // we'll start a new line if one hasn't already in the scene and we're in Playing state
+        if (Input.GetMouseButtonDown(0) && currentLine == null && GameManager.Instance.IsPlaying())
         {
             // if we reached our limits, we should also put other lines to be destroyed and fire restart level event to summon all obstacles again
             if (lineGameObjectsList.Count >= AllowedLines)
@@ -196,7 +196,7 @@ public class DrawLine : MonoBehaviour
 
     private void RestartLevel()
     {
-        GameManager.Instance.gameState = GameState.restart;
+        GameManager.Instance.StateToRestart();
     }
 
     private void EventManagerOnLevelFinished()

@@ -819,6 +819,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e4fc931e974e422bbbc92ad60a489b1, type: 2}
   - {fileID: 11400000, guid: 689bc4c354836407cadc3e34b01bb933, type: 2}
   - {fileID: 11400000, guid: c715fcbf5df904ad188eaa92ddc28c4d, type: 2}
+  LevelChangeSpeed: 10
   gameState: 0
 --- !u!1 &1538638408
 GameObject:

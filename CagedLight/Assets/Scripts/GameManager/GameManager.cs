@@ -8,12 +8,15 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
 {
     public Transform levelParent;
     public List<LevelSO> levelsList;
-    [HideInInspector] public GameState gameState;
+    public float LevelChangeSpeed = 2f;
+    private GameState gameState;
     private LevelSO currentLevel;
     private int levelNo;
     private int tryAllowed;
     private int enemyCount;
     private int gameRestartedCount = 0;
+    private bool isLevelLoaded = false;
+    private Queue<GameObject> trash = new Queue<GameObject>();
 
     private void Start()
     {
@@ -66,9 +69,32 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
                 // }
                 break;
             case GameState.loading:
-                LoadLevel(levelNo);
-                gameState = GameState.playing;
-                EventManager.OnLevelLoaded(levelsList[levelNo - 1]);
+                if (!isLevelLoaded)
+                {
+                    putTheLevelInTrash(); // the former level should be thrown into trash (we'll remove it in future)
+                    LoadLevel2(levelNo);
+                    isLevelLoaded = true;
+                }
+
+                // new level should move towards the center of the screen
+                var targetPosition = Camera.main.ViewportToWorldPoint(new Vector3(-0.5f, 0.5f, 0));
+                targetPosition.z = 0;
+                var step = LevelChangeSpeed * Time.deltaTime; // calculate distance to move
+                levelParent.position = Vector3.MoveTowards(levelParent.position, targetPosition, step);
+                // check if we reached our distination
+                if (Vector3.Distance(levelParent.position, targetPosition) < 0.001f)
+                {
+                    EmptyTrash();
+                    isLevelLoaded = false;
+
+                    // putting things back to normal
+                    levelParent.position = Vector3.zero;
+                    allChildrenToZero();
+
+
+                    gameState = GameState.playing;
+                    EventManager.OnLevelLoaded(levelsList[levelNo - 1]);
+                }
                 break;
             case GameState.playing:
                 if (IsGameFinished())
@@ -77,11 +103,8 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
                 }
                 break;
             case GameState.lost:
-                Flush();
-                gameState = GameState.loading;
                 break;
             case GameState.won:
-                Flush();
                 gameState = GameState.loading;
                 break;
             case GameState.paused:
@@ -103,13 +126,64 @@ public class GameManager : SingletoneMonoBehaviour<GameManager>
         // }
     }
 
-    private void LoadLevel(int levelNo)
+    public void StateToRestart()
+    {
+        if (gameState == GameState.playing)
+        {
+            gameState = GameState.restart;
+        }
+    }
+
+    public bool IsPlaying()
+    {
+        if (gameState == GameState.playing)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void allChildrenToZero()
+    {
+        for (int i = 0; i < levelParent.transform.childCount; i++)
+        {
+            levelParent.transform.GetChild(i).position = Vector3.zero;
+        }
+    }
+
+    private void putTheLevelInTrash()
+    {
+        for (int i = 0; i < levelParent.transform.childCount; i++)
+        {
+            trash.Enqueue(levelParent.transform.GetChild(i).gameObject);
+        }
+    }
+
+    private void EmptyTrash()
+    {
+        var size = trash.Count;
+        for (int i = 0; i < size; i++)
+        {
+            var tmp = trash.Dequeue();
+            Destroy(tmp);
+        }
+    }
+
+    private void LoadLevel2(int levelNo)
     {
         levelNo = levelsList[levelNo - 1].levelNo;
         tryAllowed = levelsList[levelNo - 1].tryAllowed;
         enemyCount = levelsList[levelNo - 1].enemyCount;
 
-        // Debug.Log($"-> Level No:{levelNo}, TA:{tryAllowed}, EN:{enemyCount}, TC:{tryCount}");
+        Instantiate(levelsList[levelNo - 1].environmentPrefab, Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, 0)) + 2 * Vector3.forward, Quaternion.identity, levelParent);
+        Instantiate(levelsList[levelNo - 1].levelPrefab, Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, 0)) + 2 * Vector3.forward, Quaternion.identity, levelParent);
+    }
+
+    private void LoadLevel(int levelNo)
+    {
+        levelNo = levelsList[levelNo - 1].levelNo;
+        tryAllowed = levelsList[levelNo - 1].tryAllowed;
+        enemyCount = levelsList[levelNo - 1].enemyCount;
 
         Instantiate(levelsList[levelNo - 1].environmentPrefab, Vector3.zero, Quaternion.identity, levelParent);
         Instantiate(levelsList[levelNo - 1].levelPrefab, Vector3.zero, Quaternion.identity, levelParent);
